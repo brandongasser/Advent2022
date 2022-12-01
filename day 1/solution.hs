@@ -2,7 +2,7 @@ import Data.List
 
 main :: IO ()
 main = do input <- readFile "input.txt"
-          let nums = map (map read) $ splitOn "" $ lines input :: [[Int]]
+          let nums = map (map read) $ splitOn "" $ lines input
           -- Part 1
           print $ maximum $ map sum nums
           -- Part 2

@@ -1,4 +1,5 @@
-import Data.List
+import Utils (splitOn)
+import Data.List (sort)
 
 main :: IO ()
 main = do input <- readFile "input.txt"
@@ -7,14 +8,3 @@ main = do input <- readFile "input.txt"
           print $ maximum $ map sum nums
           -- Part 2
           print $ sum $ take 3 $ reverse $ sort $ map sum nums
-
-{-|
-Splits a list into a list of lists without including the delimeter
-
-splitOn "" ["", "1", "2", "", "3", "4", "5", "", "", "7", ""] => [[], ["1", "2"], ["3", "4", "5"], [], ["7"], []]
--}
-splitOn :: (Eq a) => a -> [a] -> [[a]]
-splitOn e [] = []
-splitOn e xs = if e `elem` xs
-                then takeWhile (/=e) xs : splitOn e (tail $ dropWhile (/=e) xs)
-                else [xs]

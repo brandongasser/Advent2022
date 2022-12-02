@@ -11,8 +11,8 @@ toGameType "Z" = Win
 toGameType _   = undefined
 
 winScore :: Move -> Move -> Int
-winScore Rock Scissors = 6
-winScore Paper Rock = 6
+winScore Rock Scissors  = 6
+winScore Paper Rock     = 6
 winScore Scissors Paper = 6
 winScore me opp
     | me == opp = 3
@@ -27,13 +27,13 @@ score :: Move -> Move -> Int
 score me opp = moveScore me + winScore me opp
 
 winningMove :: Move -> Move
-winningMove Rock = Paper
-winningMove Paper = Scissors
+winningMove Rock     = Paper
+winningMove Paper    = Scissors
 winningMove Scissors = Rock
 
 losingMove :: Move -> Move
-losingMove Rock = Scissors
-losingMove Paper = Rock
+losingMove Rock     = Scissors
+losingMove Paper    = Rock
 losingMove Scissors = Paper
 
 drawingMove :: Move -> Move
@@ -42,7 +42,7 @@ drawingMove = id
 hypScore :: Move -> GameType -> Int
 hypScore move Draw = score (drawingMove move) move
 hypScore move Loss = score (losingMove move) move
-hypScore move Win = score (winningMove move) move
+hypScore move Win  = score (winningMove move) move
 
 toMove :: String -> Move
 toMove str

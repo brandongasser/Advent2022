@@ -2,6 +2,7 @@ import Data.Char (ord, isUpper)
 import Utils (unique)
 
 type Backpack = String
+type Group = (Backpack, Backpack, Backpack)
 
 priority :: Char -> Int
 priority c
@@ -14,14 +15,12 @@ backpackPriority xs = sum $ map priority $ unique $ filter (`elem` secondCompart
         firstCompartment = take (length xs `div` 2) xs
         secondCompartment = drop (length xs `div` 2) xs
 
-groups :: [Backpack] -> [[Backpack]]
-groups []         = []
-groups (x:y:z:xs) = [x, y, z] : groups xs
-groups _          = undefined
+groups :: [Backpack] -> [Group]
+groups (x:y:z:xs) = (x, y, z) : groups xs
+groups _          = []
 
-badge :: [Backpack] -> Char
-badge [x, y, z] = head $ filter (\c -> c `elem` y && c `elem` z) x
-badge _         = undefined
+badge :: Group -> Char
+badge (x, y, z) = head $ filter (\c -> c `elem` y && c `elem` z) x
 
 main :: IO ()
 main = do input <- readFile "day 3/input.txt"

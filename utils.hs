@@ -10,3 +10,9 @@ splitOn e [] = []
 splitOn e xs = if e `elem` xs
                 then takeWhile (/=e) xs : splitOn e (tail $ dropWhile (/=e) xs)
                 else [xs]
+
+unique :: (Eq a) => [a] -> [a]
+unique [] = []
+unique (x:xs)
+    | x `elem` xs = unique xs
+    | otherwise   = x : unique xs

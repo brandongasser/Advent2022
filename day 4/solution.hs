@@ -3,10 +3,6 @@ import Data.Set (Set, intersection, fromList)
 
 type Assignment = Set Int
 
-{-|
-takes a string in the form of "start-end" and converts it into an assignment
-containing all numbers between start and end inclusive.
--}
 toAssignment :: String -> Assignment
 toAssignment = (\[s, e] -> fromList [s..e]) . map read . splitOn '-'
 

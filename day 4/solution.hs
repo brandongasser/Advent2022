@@ -14,8 +14,8 @@ overlap a b = not $ null $ intersection a b
 
 main :: IO ()
 main = do input <- readFile "day 4/input.txt"
-          let assignments = map (map toAssignment . splitOn ',') $ lines input
+          let assignments = map ((\[a, b] -> (a, b)) . map toAssignment . splitOn ',') $ lines input
           -- Part 1
-          print $ length $ filter (\[a, b] -> fullyContained a b) assignments
+          print $ length $ filter (uncurry fullyContained) assignments
           -- Part 2
-          print $ length $ filter (\[a, b] -> overlap a b) assignments
+          print $ length $ filter (uncurry overlap) assignments

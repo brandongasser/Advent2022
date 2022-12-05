@@ -20,8 +20,8 @@ pop :: StackT a a
 pop = do xs <- get
          case xs of
             [] -> fail "Empty Stack"
-            _  -> do put $ init xs
-                     return $ last xs
+            _  -> do put $ tail xs
+                     return $ head xs
 
 popN :: Int -> StackT a [a]
 popN n = replicateM n pop

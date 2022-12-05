@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use zipWithM" #-}
 module Stack where
 
 import Control.Monad.State (StateT, MonadState(get, put))
@@ -8,6 +10,11 @@ type StackT a = StateT (Stack a) Maybe
 push :: a -> StackT a ()
 push elem = do st <- get
                put $ elem : st
+
+pushList :: [a] -> StackT a [()]
+pushList xs = sequence $ zipWith ($) pushes xs
+    where
+        pushes = push : pushes
 
 pop :: StackT a a
 pop = do xs <- get

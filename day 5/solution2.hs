@@ -1,5 +1,5 @@
 import Stack
-import Control.Monad.State
+import Control.Monad.State (execStateT, MonadState(put, get), StateT(runStateT))
 import Data.List (transpose)
 
 type Column = Int

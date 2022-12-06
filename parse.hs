@@ -75,3 +75,12 @@ double = do i <- int
             d <- nat
             return (read (show i ++ "." ++ show d))
           <|> fromIntegral <$> int
+
+trueP :: Parser Bool
+trueP = True <$ (stringP "true" <|> stringP "True" <|> stringP "t" <|> stringP "T")
+
+falseP :: Parser Bool
+falseP = False <$ (stringP "false" <|> stringP "False" <|> stringP "f" <|> stringP "F")
+
+booleanP :: Parser Bool
+booleanP = trueP <|> falseP

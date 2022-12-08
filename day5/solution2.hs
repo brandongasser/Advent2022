@@ -1,4 +1,4 @@
-import Utility.Stack
+import Utility.Stack (Stack, pushList, popN)
 import Control.Monad.State (execStateT, MonadState(put, get), StateT(runStateT))
 import Data.List (transpose)
 import Control.Monad.Identity (Identity(runIdentity))

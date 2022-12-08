@@ -1,4 +1,4 @@
-import Day7.TreeParser
+import Day7.TreeParser (isFolder, parseTree, size, Tree(..))
 
 main :: IO ()
 main = do tree <- parseTree

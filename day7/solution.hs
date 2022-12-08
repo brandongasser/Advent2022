@@ -14,12 +14,9 @@ ans1 (Folder n subs) = (if size (Folder n subs) <= 100000 then size (Folder n su
 totalSpace :: Int
 totalSpace = 70000000
 
--- I cheated here and found the size of the directory and manually subtracted it from 70000000
+-- I cheated here and found the size of the directory and manually found the needed space
 neededSpace :: Int
 neededSpace = 2536714
-
--- neededSpace :: Int
--- neededSpace = 8381165
 
 ans2 :: Tree -> Int
 ans2 (File s _) = s

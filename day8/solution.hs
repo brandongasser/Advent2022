@@ -34,6 +34,7 @@ ans1 forest = length $ filter (`visible` forest) allPoses
         maxX = length forest - 1
         maxY = length (head forest) - 1
         allPoses = [(x, y) | x <- [0..maxX], y <- [0..maxY]]
+
 main :: IO ()
 main = do forest <- parseForest
           -- Part 1

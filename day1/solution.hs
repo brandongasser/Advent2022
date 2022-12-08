@@ -1,5 +1,5 @@
 import Data.List (sort)
-import Parse (Parser, parse, newline, int)
+import Utility.Parse (Parser, parse, newline, int)
 import Control.Applicative (Alternative((<|>), some))
 
 type Elf = [Int]

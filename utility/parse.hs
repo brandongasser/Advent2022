@@ -2,7 +2,7 @@
 {-# HLINT ignore "Use first" #-}
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 {-# HLINT ignore "Use lambda-case" #-}
-module Parse where
+module Utility.Parse where
 import Control.Applicative
 import Data.Char (isDigit, isSpace)
 

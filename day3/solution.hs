@@ -1,5 +1,5 @@
 import Data.Char (ord, isUpper)
-import Utils (unique)
+import Utility.Utils (unique)
 
 type Backpack = String
 type Group = (Backpack, Backpack, Backpack)

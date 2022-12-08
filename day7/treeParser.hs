@@ -1,6 +1,6 @@
 module Day7.TreeParser where
 
-import Parse (nat, newline, parse, sat, stringP, ws, Parser)
+import Utility.Parse (nat, newline, parse, sat, stringP, ws, Parser)
 import Control.Applicative (Alternative((<|>), some))
 import Data.Char (isSpace)
 import Control.Monad.State (MonadState(put, get), execState, State)

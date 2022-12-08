@@ -1,4 +1,4 @@
-import Utils (splitOn)
+import Utility.Utils (splitOn)
 import Data.Set (Set, intersection, fromList)
 
 type Assignment = Set Int

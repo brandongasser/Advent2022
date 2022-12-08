@@ -1,4 +1,4 @@
-module Utils where
+module Utility.Utils where
 
 {-|
 Splits a list into a list of lists without including the delimeter.

@@ -1,4 +1,4 @@
-module Stack where
+module Utility.Stack where
 
 import Control.Monad.State
 import Data.Traversable (sequence)

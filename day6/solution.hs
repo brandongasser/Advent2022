@@ -1,4 +1,4 @@
-import Utils (unique)
+import Utility.Utils (unique)
 
 main :: IO ()
 main = do input <- readFile "day6/input.txt"

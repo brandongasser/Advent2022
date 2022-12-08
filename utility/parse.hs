@@ -3,7 +3,7 @@
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 {-# HLINT ignore "Use lambda-case" #-}
 module Utility.Parse where
-import Control.Applicative
+import Control.Applicative (Alternative(..))
 import Data.Char (isDigit, isSpace)
 
 newtype Parser a = P (String -> [(a, String)])

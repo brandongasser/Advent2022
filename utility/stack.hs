@@ -1,6 +1,6 @@
 module Utility.Stack where
 
-import Control.Monad.State
+import Control.Monad.State (MonadState(put, get), replicateM, zipWithM, State)
 import Data.Traversable (sequence)
 
 type Stack a = [a]

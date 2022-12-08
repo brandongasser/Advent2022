@@ -1,11 +1,10 @@
-{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 module Stack where
 
-import Control.Monad.State (StateT, MonadState(get, put))
-import Control.Monad (replicateM, zipWithM)
+import Control.Monad.State
+import Data.Traversable (sequence)
 
 type Stack a = [a]
-type StackT a = StateT (Stack a) Maybe
+type StackT a = State (Stack a)
 
 {-|
 Pushes one element onto the stack.
@@ -26,19 +25,19 @@ pushList = zipWithM ($) pushes
 {-|
 Removes the top element from the stack and returns it.
 -}
-pop :: StackT a a
+pop :: StackT a (Maybe a)
 pop = do xs <- get
          case xs of
-            [] -> fail "Empty Stack"
-            _  -> do put $ tail xs
-                     return $ head xs
+            [] -> return Nothing
+            (x:xs') -> do put xs'
+                          return (Just x)
 
 {-|
 Removes the top n elements from the stack and returns them.
 The first element in the list is the first element popped.
 -}
-popN :: Int -> StackT a [a]
-popN n = replicateM n pop
+popN :: Int -> StackT a (Maybe [a])
+popN n = sequence <$> replicateM n pop
 
 {-|
 Returns the top element on the stack without removing it.
@@ -46,7 +45,7 @@ Returns the top element on the stack without removing it.
 peek :: Stack a -> Maybe a
 peek xs
     | null xs   = Nothing
-    | otherwise = Just $ last xs
+    | otherwise = Just $ head xs
 
 {-|
 Returns True if the stack has no elements, otherwise False.

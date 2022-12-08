@@ -1,6 +1,7 @@
 import Stack
 import Control.Monad.State (execStateT, MonadState(put, get), StateT(runStateT))
 import Data.List (transpose)
+import Control.Monad.Identity (Identity(runIdentity))
 
 type Column = Int
 type Move = (Int, Column, Column)
@@ -17,8 +18,8 @@ moveToShipT :: Move -> ShipT ()
 moveToShipT (n, from, to) = do ship <- get
                                let fromStack = ship !! (from - 1)
                                let toStack = ship !! (to - 1)
-                               let Just (xs, fromStack') = runStateT (popN n) fromStack
-                               let Just toStack' = execStateT (pushList xs) toStack
+                               let (Just xs, fromStack') = runIdentity $ runStateT (popN n) fromStack
+                               let toStack' = runIdentity $ execStateT (pushList xs) toStack
                                let ship' = [if i == from then fromStack' else if i == to then toStack' else st | (i, st) <- zip [1..] ship]
                                put ship'
 

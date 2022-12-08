@@ -38,7 +38,7 @@ parseInput str = (parseShip $ unlines $ takeWhile (/="") ls, parseMoves $ unline
         ls = lines str
 
 main :: IO ()
-main = do input <- readFile "day 5/input.txt"
+main = do input <- readFile "day5/input.txt"
           let (ship, moves) = parseInput input
           let shipTs = map moveToShipT moves
           let Just ship' = execStateT (sequence shipTs) ship

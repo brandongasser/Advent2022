@@ -23,7 +23,7 @@ badge :: Group -> Char
 badge (x, y, z) = head $ filter (\c -> c `elem` y && c `elem` z) x
 
 main :: IO ()
-main = do input <- readFile "day 3/input.txt"
+main = do input <- readFile "day3/input.txt"
           -- Part 1
           print $ sum $ map backpackPriority $ lines input
           -- Part 2

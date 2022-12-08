@@ -17,7 +17,7 @@ parser = some (do elf <- elfP
                 <|> elfP)
 
 main :: IO ()
-main = do input <- readFile "day 1/input.txt"
+main = do input <- readFile "day1/input.txt"
           let [(elves, input')] = parse parser input
           -- Part 1
           print $ maximum $ map sum elves

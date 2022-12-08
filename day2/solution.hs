@@ -52,7 +52,7 @@ toMove str
     | otherwise                = undefined
 
 main :: IO ()
-main = do input <- readFile "day 2/input.txt"
+main = do input <- readFile "day2/input.txt"
           -- Part 1
           let games = map (map toMove . words) $ lines input
           print $ sum $ map (\[x, y] -> score y x) games

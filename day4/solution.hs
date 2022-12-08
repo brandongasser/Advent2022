@@ -13,7 +13,7 @@ overlap :: Assignment -> Assignment -> Bool
 overlap a b = not $ null $ intersection a b
 
 main :: IO ()
-main = do input <- readFile "day 4/input.txt"
+main = do input <- readFile "day4/input.txt"
           let assignments = map ((\[a, b] -> (a, b)) . map toAssignment . splitOn ',') $ lines input
           -- Part 1
           print $ length $ filter (uncurry fullyContained) assignments

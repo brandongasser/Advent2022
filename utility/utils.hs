@@ -22,3 +22,12 @@ unique [] = []
 unique (x:xs)
     | x `elem` xs = unique xs
     | otherwise   = x : unique xs
+
+{-|
+Splits the list every n elements into a sublist
+
+breakBy 5 [1,2,3,4,5,6,7,8,9,10,11] => [[1,2,3,4,5],[6,7,8,9,10],[11]]
+-}
+breakBy :: Int -> [a] -> [[a]]
+breakBy _ [] = []
+breakBy n xs = take n xs : breakBy n (drop n xs)

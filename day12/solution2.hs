@@ -1,5 +1,6 @@
 import Data.Char
 import Control.Monad.State
+import Utility.Utils
 
 type Coords = (Int, Int)
 type Heightmap = [Position]
@@ -44,7 +45,7 @@ canConnect c1 c2 poses = case findPos c1 poses of
                             Nothing -> False
                             Just p1 -> case findPos c2 poses of
                                             Nothing -> False
-                                            Just p2 -> abs (height p1 - height p2) <= 1 && dist c1 c2 == 1
+                                            Just p2 -> height p2 >= height p1 - 1 && dist c1 c2 == 1
 
 tryUp :: Heightmap -> State Position ()
 tryUp poses = do pos <- get
@@ -88,24 +89,22 @@ makeConnections = do poses <- get
                      let poses' = map (execState (connect poses)) poses
                      put poses'
 
-pathDist :: Coords -> [Coords] -> [Coords] -> Heightmap -> Int
-pathDist c [] _ _ = undefined
-pathDist c at visited poses
-    | c `elem` at = 0
-    | otherwise   = 1 + pathDist c next nextVisited poses
+closestHeight :: Int -> [Coords] -> [Coords] -> Heightmap -> Int
+closestHeight _ [] _ _ = error "no path"
+closestHeight target at visited poses
+    | target `elem` map (\x -> let Just p = findPos x poses in height p) at = 0
+    | otherwise = 1 + closestHeight target next visited poses
         where
-            next = filter (not . (`elem` visited)) $ concatMap ((\p -> let Just result = sequence $ filter (/=Nothing) [up p, down p, left p, right p] in result) . (\x -> let Just p = findPos x poses in p)) at
-            nextVisited = visited ++ next
-
+            next = unique $ filter (\pos -> pos `notElem` visited && pos `notElem` at) $ concatMap ((\p -> let Just result = sequence $ filter (/=Nothing) [up p, down p, left p, right p] in result) . (\x -> let Just p = findPos x poses in p)) at
+            nextVisited = visited ++ at
 
 main :: IO ()
-main = do input <- readFile "day12/input.txt"
-          let rawPoses = concat [[(x, y, c) | (x, c) <- zip [0..] row] | (y, row) <- zip [0..] (lines input)]
+main = do input <- readFile "day12/testInput.txt"
+          let rawPoses = concat [[(x, y, c) | (x, c) <- zip [1..] row] | (y, row) <- zip [1..] (lines input)]
           let startCoords = (\(a, b, _) -> (a, b)) $ head $ filter (\(_, _, c) -> c == 'S') rawPoses :: Coords
           let endCoords = (\(a, b, _) -> (a, b)) $ head $ filter (\(_, _, c) -> c == 'E') rawPoses :: Coords
-          let poses = map (\(x, y, c) -> createPos (x, y) (charHeight c)) rawPoses :: Heightmap
-          let heightmap =  execState makeConnections poses
-          print $ pathDist endCoords [startCoords] [startCoords] heightmap
+          let poses = execState makeConnections (map (\(x, y, c) -> createPos (x, y) (charHeight c)) rawPoses) :: Heightmap
+          print $ closestHeight (charHeight 'a') [endCoords] [] poses
 
 charHeight :: Char -> Int
 charHeight 'S' = charHeight 'a'

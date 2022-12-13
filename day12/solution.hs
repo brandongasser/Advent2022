@@ -88,15 +88,24 @@ makeConnections = do poses <- get
                      let poses' = map (execState (connect poses)) poses
                      put poses'
 
+pathDist :: Coords -> [Coords] -> [Coords] -> Heightmap -> Int
+pathDist c [] _ _ = undefined
+pathDist c at visited poses
+    | c `elem` at = 0
+    | otherwise   = 1 + pathDist c next nextVisited poses
+        where
+            next = filter (not . (`elem` visited)) $ concatMap ((\p -> let Just result = sequence $ filter (/=Nothing) [up p, down p, left p, right p] in result) . (\x -> let Just p = findPos x poses in p)) at
+            nextVisited = visited ++ next
+
+
 main :: IO ()
-main = do input <- readFile "day12/testInput.txt"
+main = do input <- readFile "day12/input.txt"
           let rawPoses = concat [[(x, y, c) | (x, c) <- zip [0..] row] | (y, row) <- zip [0..] (lines input)]
           let startCoords = (\(a, b, _) -> (a, b)) $ head $ filter (\(_, _, c) -> c == 'S') rawPoses :: Coords
           let endCoords = (\(a, b, _) -> (a, b)) $ head $ filter (\(_, _, c) -> c == 'E') rawPoses :: Coords
           let poses = map (\(x, y, c) -> createPos (x, y) (charHeight c)) rawPoses :: Heightmap
-          let poses' =  execState makeConnections poses
-          print poses'
-          print $ findPos startCoords poses'
+          let heightmap =  execState makeConnections poses
+          print $ pathDist endCoords [startCoords] [startCoords] heightmap
 
 charHeight :: Char -> Int
 charHeight 'S' = charHeight 'a'

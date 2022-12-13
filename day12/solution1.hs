@@ -1,6 +1,6 @@
-import Data.Char
-import Control.Monad.State
-import Utility.Utils
+import Data.Char (ord)
+import Control.Monad.State (execState, MonadState(put, get), State)
+import Utility.Utils (unique)
 
 type Coords = (Int, Int)
 type Heightmap = [Position]

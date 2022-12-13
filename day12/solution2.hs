@@ -99,7 +99,7 @@ closestHeight target at visited poses
             nextVisited = visited ++ at
 
 main :: IO ()
-main = do input <- readFile "day12/testInput.txt"
+main = do input <- readFile "day12/input.txt"
           let rawPoses = concat [[(x, y, c) | (x, c) <- zip [1..] row] | (y, row) <- zip [1..] (lines input)]
           let startCoords = (\(a, b, _) -> (a, b)) $ head $ filter (\(_, _, c) -> c == 'S') rawPoses :: Coords
           let endCoords = (\(a, b, _) -> (a, b)) $ head $ filter (\(_, _, c) -> c == 'E') rawPoses :: Coords

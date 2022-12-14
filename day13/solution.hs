@@ -33,18 +33,6 @@ pairsP = many (do p <- pairP
                   return p
                 <|> pairP)
 
--- inOrder :: PacketPair -> Bool
--- inOrder (Ls [], _) = True
--- inOrder (_, Ls []) = False
--- inOrder (Ls (Val x:xs), Ls (Val y:ys)) = if x > y
---                                          then False
---                                          else if x < y
---                                               then True
---                                               else inOrder (Ls xs, Ls ys)
--- inOrder (Ls (Ls xs':xs), Ls (Ls ys':ys)) = inOrder (Ls xs', Ls ys') && inOrder (Ls xs, Ls ys)
--- inOrder (Ls (Val x:xs), (Ls (Ls ys':ys))) = inOrder (Ls (Ls [Val x]:xs), Ls (Ls ys':ys))
--- inOrder (Ls (Ls xs':xs), (Ls (Val y:ys))) = inOrder (Ls (Ls xs':xs), Ls (Ls [Val y]:ys))
-
 inOrder :: PacketPair -> Maybe Bool
 inOrder (Ls [], Ls []) = Nothing
 inOrder (Ls [], _) = Just True
